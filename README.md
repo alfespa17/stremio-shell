@@ -30,6 +30,11 @@ There is also an automated build script located in `./dist-utils/build-package.s
 
 For more information refer to the [DOCKER.md](DOCKER.md) file.
 
+## Third-party install scripts
+
+There are repositories for third-party install scripts that may be useful for you, most notably: https://github.com/alexandru-balan/Stremio-Install-Scripts 
+
+We give no guarantees about their correctness or security. 
 
 ## Releasing a version
 
@@ -51,3 +56,5 @@ For more information refer to the [DOCKER.md](DOCKER.md) file.
 ``--autoupdater-force-full``: would force the auto-updater to always perform a full update (rather than partial)
 
 ``--autoupdater-endpoint=``: would override the default checking endpoints for the autoupdater
+
+To test the autoupdater, you can use a command like: `./stremio --autoupdater-force --autoupdater-endpoint="https://www.stremio.com/updater/check?force=true"`; `force=true` passed to the update endpoint would cause it to always return the latest descriptor
