@@ -15,6 +15,9 @@ install:
 	install -Dm 644 ${SERVER_JS} "${INSTALL_DIR}/server.js"
 	cp -r icons "${INSTALL_DIR}/"
 	ln -s "${shell which node}" "${INSTALL_DIR}/node"
+ifneq ("$(wildcard ../mpv-build/mpv/build)","")
+	cp ../mpv-build/mpv/build/libmpv.so* "${INSTALL_DIR}/"
+endif
 
 uninstall:
 	rm -f /usr/bin/stremio
@@ -24,8 +27,8 @@ icons:
 	mkdir -p "$@"
 	cd "$@" && printf 16,22,24,32,64,128 | xargs -I^ -d, sh -c 'rsvg-convert ../images/stremio.svg -w ^ -o smartcode-stremio_^.png && rsvg-convert ../images/stremio_tray_white.svg -w ^ -o smartcode-stremio-tray_^.png'
 
-${SERVER_JS}:
-	wget "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/master/server.js" -qO ${SERVER_JS} || rm ${SERVER_JS}
+${SERVER_JS}: 
+	wget "https://s3-eu-west-1.amazonaws.com/stremio-artifacts/four/v$(shell grep -hoP '^\s*VERSION\s*=\s*\K.*$$' stremio.pro)/server.js" -qO ${SERVER_JS} || rm ${SERVER_JS}
 
 ${STREMIO_BIN}:
 	mkdir -p ${BUILD_DIR}
